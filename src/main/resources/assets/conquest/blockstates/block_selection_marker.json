@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up": { "model": "conquest:normal_marker" },
+        "facing=east": { "model": "conquest:normal_marker_wall" },
+        "facing=south": { "model": "conquest:normal_marker_wall", "y": 90 },
+        "facing=west": { "model": "conquest:normal_marker_wall", "y": 180 },
+        "facing=north": { "model": "conquest:normal_marker_wall", "y": 270 }
+    }
+}
