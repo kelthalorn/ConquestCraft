@@ -145,6 +145,7 @@ public class GuiConstructorTileEntity extends GuiContainer {
 			BufferedReader br = new BufferedReader(fl);
 	    	StringBuilder sb = new StringBuilder();
 	    	String line;
+	    	
 			try {
 				line = br.readLine();
 				
