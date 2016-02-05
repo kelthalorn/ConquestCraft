@@ -18,19 +18,19 @@ public class ContainerConstructorTileEntity extends Container{
 		byte b1 = 8;
         short short0 = 137;
         short short1 = 84;
-        short short2 = 10;
+        short short2 = 8;
 		int y, x;
 		
 		// Tile Entity, Slot 0-19, Slot IDs 0-19
 		for (y = 0; y < 4; ++y) {
 			for (x = 0; x < 5; ++x) {
-	        	this.addSlotToContainer(new Slot(te, x + y * 4, (18 * x) + b1, (18 * y) + short2));
+	        	this.addSlotToContainer(new ContainerConstructorTileEntity.ConstructorSlot(te, x + y * 5, (18 * x) + b1, (18 * y) + short2));
 	        }
 	    }
 		
 		for (y = 0; y < 2; ++y) {
 			for (x = 0; x < 12; ++x) {
-	        	this.addSlotToContainer(new Slot(te, x + y * 2 + 20, (18 * x) + b1, (18 * y) + short1));
+	        	this.addSlotToContainer(new Slot(te, x + y * 12 + 20, (18 * x) + b1, (18 * y) + short1));
 	        }
 	    }
 		
@@ -96,9 +96,15 @@ public class ContainerConstructorTileEntity extends Container{
          * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1 in the
          * case of armor slots)
          */
+        @Override
         public int getSlotStackLimit()
         {
             return 1000;
+        }
+        
+        @Override
+        public boolean canTakeStack(EntityPlayer player) {
+        	return false;
         }
     }
 }

@@ -32,6 +32,7 @@ public class GuiConstructorTileEntity extends GuiContainer {
 	
 	private IInventory playerInv;
 	private ConstructorTileEntity te;
+	private int nbRequires;
 	private static final ResourceLocation constructionGuiTextures = new ResourceLocation("conquest:textures/gui/container/constructor_tile_entity.png");
     
 	
@@ -39,7 +40,7 @@ public class GuiConstructorTileEntity extends GuiContainer {
 	    super(new ContainerConstructorTileEntity(playerInv, te));
 	    this.playerInv = playerInv;
 	    this.te = te;
-	    
+	    this.nbRequires = 0;
 	    
 	    this.xSize = 230;
         this.ySize = 219;
@@ -62,6 +63,8 @@ public class GuiConstructorTileEntity extends GuiContainer {
 				
 				case 1:  this.drawTexturedModalRect(k1, l + 5 + 19 * i, 90, 237, 108, 19);
 						 showRequires(currentConstruction.getConstructionName(), k, l);
+						 if (checkRequires())
+							 this.drawTexturedModalRect(k1, l + 5 + 19 * i, 198, 237, 19, 19);
 						 break;
 				case 2:  this.drawTexturedModalRect(k1, l + 5 + 19 * i, 198, 237, 19, 19);
 						 break;
@@ -177,7 +180,7 @@ public class GuiConstructorTileEntity extends GuiContainer {
 			JsonObject  jobject = jelement.getAsJsonObject();
     	
 	    	JsonArray requirments = jobject.getAsJsonArray("requires");
-			
+			this.nbRequires = requirments.size();
 			for (int r = 0; r < requirments.size() ; r++) {
 				JsonObject currentRequire = requirments.get(r).getAsJsonObject();
 				
@@ -190,6 +193,28 @@ public class GuiConstructorTileEntity extends GuiContainer {
 		        te.setInventorySlotContents(r,new ItemStack(block,quantity));
 			}
 		}
+    }
+    
+    private boolean checkRequires() {
+    	
+    	for (int i = 0; i < this.nbRequires; i++) {
+    		ItemStack currentStack = te.getStackInSlot(i);
+    		
+    		boolean found = false;
+    		for (int j = 20; j < 44; j++) {
+    			ItemStack inventoryStack = te.getStackInSlot(j);
+    			
+    			if (inventoryStack != null && currentStack.getIsItemStackEqual(inventoryStack)) {
+    				found = true;
+    				break;
+    			}
+    		}
+    		
+    		if (!found)
+    			return false;
+    	}
+    	
+    	return true;
     }
     
     @SideOnly(Side.CLIENT)
